@@ -7,7 +7,7 @@ import { auth } from '../../firebase.js';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import "./Home.css";
 
-const Home = ({ name, setName, fetchQuestions, questions }) => {
+const Home = ({ fetchQuestions }) => {
   const [category, setCategory] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [error, setError] = useState(false);
