@@ -3,17 +3,38 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "../../components/ErrrorMessage/ErrorMessage";
 import Categories from "../../data/Categories";
+import { auth } from '../../firebase.js';
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import "./Home.css";
 
 const Home = ({ name, setName, fetchQuestions, questions }) => {
   const [category, setCategory] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [error, setError] = useState(false);
+  const [currentUser, setCurrentUser] = useState();
+  const setSignInError = useState(null);
+  const genericError = "An  error occurred while signing you in, please try again.";
 
+  auth.onAuthStateChanged((user) => {
+     setCurrentUser(user);
+  }); 
+
+  const doGoogleSignIn = () => {
+    setSignInError(null);
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+    .catch((error) => {
+      console.error(error);
+      setSignInError(genericError);
+    });
+  }
+  
+  // const name = auth.currentUser.displayName;
   const history = useNavigate();
 
   const handleSubmit = () => {
-    if (!category || !difficulty || !name) {
+    if (!category || !difficulty ) {
+      // if (!category || !difficulty || !name) {
       setError(true);
       return;
     } else {
@@ -29,13 +50,15 @@ const Home = ({ name, setName, fetchQuestions, questions }) => {
 
         <div className="settings_select">
           {error && <ErrorMessage>Please fill all the fields</ErrorMessage>}
-          <TextField
-            style={{ marginBottom: 25 }}
-            label="Enter Your Name"
+          <Button 
+            style={{ marginBottom: 30 }}
             variant="outlined"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
+            onClick={doGoogleSignIn}
+            // onChange={(e) => setName(e.target.value)}
+            >
+            {currentUser ? <p>Player: {auth.currentUser.displayName}</p> : 'Sign In with Google'}
+            {/* <p>Name: {auth.currentUser.displayName}</p> */}
+          </Button>
 
           <TextField
             style={{ marginBottom: 30 }}

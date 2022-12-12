@@ -6,11 +6,11 @@ import "./Result.css";
 const Result = ({ name, score }) => {
   const history = useNavigate();
 
-  useEffect(() => {
-    if (!name) {
-      history("/");
-    }
-  }, [name, history]);
+  // useEffect(() => {
+  //   if (!name) {
+  //     history("/");
+  //   }
+  // }, [name, history]);
   return (
     <div className="result">
       <span className="title">Final Score : {score}</span>
