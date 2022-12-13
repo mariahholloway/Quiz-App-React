@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Quiz.css";
 import Question from "../../components/Question/Question";
+import { auth } from '../../firebase.js';
 
-const Quiz = ({ name, questions, setQuestions, score, setScore }) => {
+const Quiz = ({ questions, setQuestions, score, setScore }) => {
   const [options, setOptions] = useState();
   const [currQues, setCurrQues] = useState(0);
+  // const name = auth.currentUser.displayName;
 
   useEffect(() => {
     setOptions(
@@ -23,7 +25,7 @@ const Quiz = ({ name, questions, setQuestions, score, setScore }) => {
 
   return (
     <div className="quiz">
-      <span className="subtitle">Hello, {name}</span>
+      <span className="subtitle">Hello, {auth.currentUser.displayName}</span>
 
       {questions ? (
         <>

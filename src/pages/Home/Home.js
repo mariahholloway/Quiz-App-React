@@ -4,16 +4,37 @@ import { useNavigate } from "react-router-dom";
 import ErrorMessage from "../../components/ErrrorMessage/ErrorMessage";
 import Categories from "../../data/Categories";
 import "./Home.css";
+import { auth } from '../../firebase.js';
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { Link } from 'react-router-dom';
 
-const Home = ({ name, setName, fetchQuestions, questions }) => {
+const Home = ({ fetchQuestions, questions }) => {
   const [category, setCategory] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [error, setError] = useState(false);
+  const [currentUser, setCurrentUser] = useState();
+  const setSignInError = useState(null);
+  const genericError = "An  error occurred while signing you in, please try again.";
+  // const name = auth.currentUser.displayName;
+
+  auth.onAuthStateChanged((user) => {
+     setCurrentUser(user);
+  }); 
+
+  const doGoogleSignIn = () => {
+    setSignInError(null);
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+    .catch((error) => {
+      console.error(error);
+      setSignInError(genericError);
+    });
+  }
 
   const history = useNavigate();
 
   const handleSubmit = () => {
-    if (!category || !difficulty || !name) {
+    if (!category || !difficulty ) {
       setError(true);
       return;
     } else {
@@ -29,13 +50,13 @@ const Home = ({ name, setName, fetchQuestions, questions }) => {
 
         <div className="settings_select">
           {error && <ErrorMessage>Please fill all the fields</ErrorMessage>}
-          <TextField
-            style={{ marginBottom: 25 }}
-            label="Enter Your Name"
-            variant="outlined"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
+            
+          <Button>
+          <Link 
+            style={{ marginBottom: 30 }} 
+            to="/signin" >
+            {currentUser ? <b>Player: {auth.currentUser.displayName}</b> : <b>Sign In</b> }
+            </Link></Button>
 
           <TextField
             style={{ marginBottom: 30 }}

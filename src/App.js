@@ -7,11 +7,21 @@ import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import Quiz from "./pages/Quiz/Quiz";
 import Result from "./pages/Result/Result";
+import SignIn from "./pages/SignIn/SignIn";
+import SignUp from "./pages/SignIn/SignUp.js";
+// import { auth } from './firebase.js';
+
 
 function App() {
   const [name, setName] = useState("");
+  // const name = auth.currentUser.displayName;
   const [questions, setQuestions] = useState();
   const [score, setScore] = useState(0);
+  // const [currentUser, setCurrentUser] = useState();
+
+  // auth.onAuthStateChanged((user) => {
+  //   setCurrentUser(user);
+  // });
 
   const fetchQuestions = async (category = "", difficulty = "") => {
     const { data } = await axios.get(
@@ -33,8 +43,8 @@ function App() {
             exact
             element={
               <Home
-                name={name}
-                setName={setName}
+                // name={name}
+                // setName={setName}
                 fetchQuestions={fetchQuestions}
                 questions={questions}
               />
@@ -44,7 +54,7 @@ function App() {
             path="/quiz"
             element={
               <Quiz
-                name={name}
+                // name={name}
                 questions={questions}
                 setQuestions={setQuestions}
                 score={score}
@@ -54,7 +64,15 @@ function App() {
           ></Route>
           <Route
             path="/result"
-            element={<Result name={name} score={score} />}
+            element={<Result score={score} />}
+          ></Route>
+          <Route
+            path="/signin"
+            element={<SignIn  />}
+          ></Route>
+          <Route
+            path="/signup"
+            element={<SignUp  />}
           ></Route>
           <Route
             path="*"
