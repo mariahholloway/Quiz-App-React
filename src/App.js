@@ -25,9 +25,9 @@ function App() {
 
   const fetchQuestions = async (category = "", difficulty = "") => {
     const { data } = await axios.get(
-      `https://custom-trivia-api.com/all?project=HU_Do_You_Know${
+      `https://opentdb.com/api.php?amount=10&${
         category && `&category=${category}`
-      }${difficulty && `&level=${difficulty}`}&type=multiple`
+      }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
     );
     setQuestions(data.results);
   };
