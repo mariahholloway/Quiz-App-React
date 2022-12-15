@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../../firebase.js';
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import './SignIn.css';
+import '../SignIn/SignIn.css';
 
 const SignUp = ({setShouldShowSignIn}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signUpError, setSignUpError] = useState(null);
+  const history = useNavigate();
 
     
   const genericError = "An  error occurred while signing you up, please try again.";
@@ -59,13 +60,14 @@ const SignUp = ({setShouldShowSignIn}) => {
               <TextField label="Name" variant="outlined" value={name} onChange={(e) => setName(e.target.value)} />
               <TextField label="Email address" variant="outlined" value={email} onChange={(e) => setEmail(e.target.value)} />
               <TextField label="Password" variant="outlined" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <Button variant="outlined" onClick={doSignUp}>Sign me up</Button>
+              <Button variant="outlined" to="/" onClick={doSignUp}><b>Sign me up</b></Button>
           </div>
-          <div className="alt-buttons">
-              <Button variant="outlined" onClick={doGoogleSignUp}>Sign Up with Google</Button>
-              <Button variant="outlined" onClick={() => {setShouldShowSignIn(true);}}>I have an account</Button>
+          <div className="signin-box2">
+              <Button variant="outlined" onClick={(e) => {e.preventDefault();history("/signin"); setShouldShowSignIn(true);}}><b>I have an account</b></Button>
+            <div className="box-header">
+              <Button variant="outlined" color="secondary"><Link to="/">Quiz Home</Link></Button>
+            </div>
           </div>
-          <Link to="/">Quiz Home</Link>
     </div>
     </div>
   );
