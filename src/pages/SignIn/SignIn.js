@@ -5,7 +5,6 @@ import { auth } from '../../firebase.js';
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import './SignIn.css';
-// import './App.css;'
 
 const SignIn = ({setShouldShowSignIn}) => {
   const [email, setEmail] = useState("");
@@ -16,9 +15,7 @@ const SignIn = ({setShouldShowSignIn}) => {
   const history = useNavigate();
   const [signUpError, setSignUpError] = useState(null);
 
-    
-  // const genericError = "An  error occurred while signing you up, please try again.";
-  
+
   const doSignIn = () => {
     setSignInError(null);
     if (!email  || !password) {return;}
@@ -62,16 +59,6 @@ const SignIn = ({setShouldShowSignIn}) => {
     });
   }
 
-  const doGoogleSignIn = () => {
-      setSignInError(null);
-      const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider)
-      .catch((error) => {
-        console.error(error);
-        setSignInError(genericError);
-      });
-  }
-    
   const doGoogleSignUp = () => {
     setSignUpError(null);
     const provider = new GoogleAuthProvider();

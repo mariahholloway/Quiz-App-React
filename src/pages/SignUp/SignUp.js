@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../../firebase.js';
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -39,17 +38,6 @@ const SignUp = ({setShouldShowSignIn}) => {
     });
   }
   
-  const doGoogleSignUp = () => {
-      setSignUpError(null);
-      const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log(result);
-      }).catch((error) => {
-        console.log(error);
-        setSignUpError(genericError);
-      });
-  }
   
   return (
       <div className="page-container">

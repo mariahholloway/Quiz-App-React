@@ -7,7 +7,6 @@ import { auth } from '../../firebase.js';
 const Quiz = ({ questions, setQuestions, score, setScore }) => {
   const [options, setOptions] = useState();
   const [currQues, setCurrQues] = useState(0);
-  // const name = auth.currentUser.displayName;
 
   useEffect(() => {
     setOptions(
@@ -30,8 +29,8 @@ const Quiz = ({ questions, setQuestions, score, setScore }) => {
       {questions ? (
         <>
           <div className="quizInfo">
-            <span>{questions[currQues].category}</span>
-            <span>Score : {score}</span>
+            <span><b>{questions[currQues].category}</b></span>
+            <span><b>Score : {score}</b></span>
           </div>
 
           <Question

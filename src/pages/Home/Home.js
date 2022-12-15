@@ -5,7 +5,6 @@ import ErrorMessage from "../../components/ErrrorMessage/ErrorMessage";
 import Categories from "../../data/Categories";
 import "./Home.css";
 import { auth } from '../../firebase.js';
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { Link } from 'react-router-dom';
 
 const Home = ({ fetchQuestions, questions }) => {
@@ -13,23 +12,10 @@ const Home = ({ fetchQuestions, questions }) => {
   const [difficulty, setDifficulty] = useState("");
   const [error, setError] = useState(false);
   const [currentUser, setCurrentUser] = useState();
-  const setSignInError = useState(null);
-  const genericError = "An  error occurred while signing you in, please try again.";
-  // const name = auth.currentUser.displayName;
 
   auth.onAuthStateChanged((user) => {
      setCurrentUser(user);
   }); 
-
-  const doGoogleSignIn = () => {
-    setSignInError(null);
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-    .catch((error) => {
-      console.error(error);
-      setSignInError(genericError);
-    });
-  }
 
   const history = useNavigate();
 
