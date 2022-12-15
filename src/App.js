@@ -8,7 +8,7 @@ import Home from "./pages/Home/Home";
 import Quiz from "./pages/Quiz/Quiz";
 import Result from "./pages/Result/Result";
 import SignIn from "./pages/SignIn/SignIn";
-import SignUp from "./pages/SignIn/SignUp.js";
+import SignUp from "./pages/SignUp/SignUp.js";
 // import { auth } from './firebase.js';
 
 
